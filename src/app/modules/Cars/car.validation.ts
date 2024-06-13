@@ -14,7 +14,30 @@ const createCarValidationSchema = z.object({
       .optional(),
   }),
 });
+const updateCarValidationSchema = z.object({
+  body: z.object({
+    name: z.string({ required_error: "Name is required" }).optional(),
+    description: z
+      .string({ required_error: "Description is required" })
+      .optional(),
+    color: z.string({ required_error: "Description is required" }).optional(),
+    isElectric: z
+      .boolean({ required_error: "Description is required" })
+      .optional(),
+    status: z.enum(["available", "unavailable"]).optional(),
+    features: z
+      .array(z.string({ required_error: "Description is required" }))
+      .optional(),
+    pricePerHour: z
+      .number({ required_error: "Description is required" })
+      .optional(),
+    isDeleted: z
+      .boolean({ required_error: "Description is required" })
+      .optional(),
+  }),
+});
 
 export const CarValidation = {
   createCarValidationSchema,
+  updateCarValidationSchema,
 };

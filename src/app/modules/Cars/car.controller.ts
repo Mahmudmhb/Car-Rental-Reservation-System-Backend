@@ -8,7 +8,7 @@ const createCar = catchAsync(async (req, res) => {
   sendResponce(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "car create successfully",
+    message: "Car created successfully",
     data: result,
   });
 });
@@ -17,7 +17,7 @@ const getAllCar = catchAsync(async (req, res) => {
   sendResponce(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "car retrived are successfully",
+    message: "Cars retrieved successfully",
     data: result,
   });
 });
@@ -27,7 +27,7 @@ const getSingleCar = catchAsync(async (req, res) => {
   sendResponce(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "car retrived is successfully",
+    message: "A Car retrieved successfully",
     data: result,
   });
 });

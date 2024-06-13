@@ -7,14 +7,14 @@ import config from "../../config";
 const registerUser = catchAsync(async (req, res) => {
   const result = await AuthService.register(req.body);
   sendResponce(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 201,
     success: true,
-    message: "User register successfully",
+    message: "User registered successfully",
     data: result,
   });
 });
 const userLogin = catchAsync(async (req, res) => {
-  const { accessRefreashToken, accessToken } = await AuthService.loginUser(
+  const { accessRefreashToken, token, user } = await AuthService.loginUser(
     req.body
   );
 
@@ -22,11 +22,12 @@ const userLogin = catchAsync(async (req, res) => {
     httpOnly: true,
     secure: config.NODE_ENV === "production",
   });
+
   sendResponce(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User login successfully",
-    data: { accessToken },
+    message: "User logged in successfully",
+    data: { user, token },
   });
 });
 

@@ -50,7 +50,7 @@ const loginUser = async (payload: TUserLogin) => {
     role: user.role,
   };
 
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_token as string, {
+  const token = jwt.sign(jwtPayload, config.jwt_access_token as string, {
     expiresIn: "1d",
   });
   const accessRefreashToken = jwt.sign(
@@ -61,8 +61,9 @@ const loginUser = async (payload: TUserLogin) => {
     }
   );
   return {
-    accessToken,
+    token,
     accessRefreashToken,
+    user,
   };
 };
 
