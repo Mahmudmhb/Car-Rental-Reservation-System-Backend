@@ -14,6 +14,7 @@ const newBooked = catchAsync(async (req, res) => {
   });
 });
 const getAllOrders = catchAsync(async (req, res) => {
+  console.log("test", req.user);
   const result = await BookedService.getAllBookedFromDB();
   sendResponce(res, {
     statusCode: httpStatus.OK,

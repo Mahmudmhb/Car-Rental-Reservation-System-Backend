@@ -18,23 +18,31 @@ const register = async (payload: TUser) => {
 };
 
 const loginUser = async (payload: TUserLogin) => {
-  const user = await User.findOne({ email: payload.email }).select("password");
+  console.log(payload);
+  const user = await User.isUserExistsByCustomId(payload.email);
+
+  // const isUserExists = await User.findOne({ email: payload.email }).select(
+  //   "password"
+  // );
+  // console.log(user);
   if (!user) {
-    throw new AppError(httpStatus.CONFLICT, "User not found");
+    throw new AppError(httpStatus.NOT_EXTENDED, "This User not found");
   }
-  const isPasswordExsits = async (
-    newPassword: string,
-    hashPassword: string
-  ) => {
-    const isMatched = await bcryptjs.compare(newPassword, hashPassword);
-    return isMatched;
-  };
-  const passwordMatched = await isPasswordExsits(
-    payload.password,
-    user.password
-  );
-  if (!passwordMatched) {
-    throw new AppError(httpStatus.CONFLICT, "wrong password !");
+
+  // const isPasswordExsits = async (
+  //   newPassword: string,
+  //   hashPassword: string
+  // ) => {
+  //   const isPasswordMatched =
+  //   return isPasswordMatched;
+  // };
+  // const passwordMatched = await isPasswordExsits(
+  //   payload.password,
+  //   isUserExists.password
+  // );
+  // console.log(isUserExists);
+  if (!(await User.isPasswordMatched(payload.password, user.password))) {
+    throw new AppError(httpStatus.FORBIDDEN, "wrong password !");
   }
 
   const jwtPayload = {
