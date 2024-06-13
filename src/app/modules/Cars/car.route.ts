@@ -10,7 +10,8 @@ router.post(
   CarController.createCar
 );
 router.get("/:id", CarController.getSingleCar);
-router.patch("/:id", CarController.updateCar);
+router.put("/return", CarController.returnUpdateCar);
+router.put("/:id", CarController.updateCar);
 router.delete("/:id", CarController.deleteCar);
 router.get("/", CarController.getAllCar);
 export const CarRoute = router;

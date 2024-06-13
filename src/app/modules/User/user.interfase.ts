@@ -1,7 +1,9 @@
+import { user_role } from "./user.constant";
+
 export type TUser = {
   name: string;
   email: string;
-  role: "user" | "admin";
+  role: keyof typeof user_role;
   password: string;
   phone: number;
   address: string;

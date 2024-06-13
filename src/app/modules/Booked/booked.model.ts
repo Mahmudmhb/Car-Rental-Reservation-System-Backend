@@ -1,13 +1,17 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { TBooked } from "./booked.interfase";
 
 const bookedSchema = new Schema<TBooked>({
-  date: { type: String },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  carId: { type: Schema.Types.ObjectId, ref: "Car" },
+  date: { type: String, required: [true, "date is requierd"] },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+
+    ref: "User",
+  },
+  carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car" },
   startTime: { type: String },
-  endTime: { type: String },
-  totalCost: { type: Number },
+  endTime: { type: String, default: null },
+  totalCost: { type: Number, default: 0 },
   isBooked: {
     type: String,
     enum: ["unconfirmed", "confirmed"],

@@ -1,11 +1,11 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 export type TBooked = {
-  user?: Types.ObjectId;
   date: string;
-  carId: Types.ObjectId;
   startTime: string;
+  user?: mongoose.Schema.Types.ObjectId;
+  carId: mongoose.Schema.Types.ObjectId;
   endTime?: string;
-  totalCost: number;
-  isBooked: "unconfirmed" | "confirmed";
+  totalCost?: number;
+  isBooked?: "unconfirmed" | "confirmed";
 };
