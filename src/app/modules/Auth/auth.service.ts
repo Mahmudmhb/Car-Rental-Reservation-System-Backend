@@ -6,6 +6,7 @@ import { TUserLogin } from "./auth.interfase";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "../../config";
+import { accesstoken } from "./auth.utls";
 
 const register = async (payload: TUser) => {
   const user = await User.findOne({ email: payload.email });
@@ -18,7 +19,6 @@ const register = async (payload: TUser) => {
 };
 
 const loginUser = async (payload: TUserLogin) => {
-  console.log(payload);
   const user = await User.isUserExistsByCustomId(payload.email);
 
   // const isUserExists = await User.findOne({ email: payload.email }).select(
@@ -50,15 +50,16 @@ const loginUser = async (payload: TUserLogin) => {
     role: user.role,
   };
 
-  const token = jwt.sign(jwtPayload, config.jwt_access_token as string, {
-    expiresIn: "1d",
-  });
-  const accessRefreashToken = jwt.sign(
+  const token = accesstoken(
+    jwtPayload,
+    config.jwt_access_token as string,
+    "7d"
+  );
+
+  const accessRefreashToken = accesstoken(
     jwtPayload,
     config.jwt_refresh_token as string,
-    {
-      expiresIn: "7d",
-    }
+    "1y"
   );
   return {
     token,

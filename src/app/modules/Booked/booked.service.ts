@@ -26,11 +26,14 @@ const getAllBookedFromDB = async () => {
   return result;
 };
 const getMYAllBookedFromDB = async (email: string) => {
-  console.log(email);
-  const result = await Booked.find({ email })
+  // console.log(email);
+  const filterLoginUser = await User.findOne({ email });
+  // console.log(filterLoginUser);
+  const { _id: user } = filterLoginUser;
+  const result = await Booked.find({ user: user })
     .populate("carId")
     .populate("user");
-  console.log(result);
+  // console.log(result);
   return result;
 };
 const getSingleBookedFromDB = async (id: string) => {
