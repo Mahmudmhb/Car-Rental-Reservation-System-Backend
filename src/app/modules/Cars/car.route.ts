@@ -4,6 +4,8 @@ import { CarController } from "./car.controller";
 import { CarValidation } from "./car.validation";
 import auth from "../../middleware/auth";
 import { user_role } from "../User/user.constant";
+import { BookedController } from "../Booked/booked.controller";
+import { bookedValidation } from "../Booked/booked.validation";
 
 const router = Router();
 router.post(
@@ -13,7 +15,12 @@ router.post(
   CarController.createCar
 );
 router.get("/:id", CarController.getSingleCar);
-router.put("/return", CarController.returnUpdateCar);
+router.put(
+  "/return",
+  auth(user_role.admin),
+  validationRequset(bookedValidation.updateBookedValidationSchema),
+  BookedController.returnBooked
+);
 router.put(
   "/:id",
   auth(user_role.admin),

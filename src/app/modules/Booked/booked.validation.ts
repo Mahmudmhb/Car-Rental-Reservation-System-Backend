@@ -17,17 +17,19 @@ const newBookedValidationSchema = z.object({
     totalCost: z.number().optional(),
     isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
   }),
-  // .refine(
-  //   (body) => {
-  //     const start = new Date(`1970-01-01T${body.startTime}`);
-  //     const end = new Date(`1970-01-01T${body.endTime}`);
-  //     return end > start;
-  //   },
-  //   {
-  //     message: "start time should be before End Time",
-  //   }
-  // ),
+});
+const updateBookedValidationSchema = z.object({
+  body: z.object({
+    date: z.string().optional(),
+    user: z.string().optional(),
+    carId: z.string().optional(),
+    startTime: timeSchema.optional(),
+    endTime: timeSchema,
+    totalCost: z.number().optional(),
+    isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
+  }),
 });
 export const bookedValidation = {
   newBookedValidationSchema,
+  updateBookedValidationSchema,
 };

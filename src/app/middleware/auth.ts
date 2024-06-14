@@ -5,9 +5,6 @@ import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import { Tuser_role } from "../modules/User/user.interfase";
-interface CustomRequest extends Request {
-  user: JwtPayload;
-}
 
 const auth = (...requiredRoles: Tuser_role[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {

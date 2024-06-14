@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import AppError from "../../Error/AppError";
 import { TBooked } from "../Booked/booked.interfase";
 import { Booked } from "../Booked/booked.model";
 import { TCar } from "./car.interfase";
@@ -23,15 +25,7 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
   });
   return result;
 };
-const returnUpdateCarIntoDB = async (id: string, payload: Partial<TBooked>) => {
-  console.log("get id", id);
-  const result = await Booked.findOneAndUpdate({ _id: id }, payload, {
-    new: true,
-    runValidators: true,
-  });
-  console.log("find the", result);
-  return result;
-};
+
 const deleteCarFromDB = async (id: string, payload: Partial<TCar>) => {
   const result = await Car.findByIdAndUpdate(id, {
     isDeleted: true,
@@ -46,5 +40,4 @@ export const CarService = {
   getSingleCarFromDB,
   updateCarIntoDB,
   deleteCarFromDB,
-  returnUpdateCarIntoDB,
 };

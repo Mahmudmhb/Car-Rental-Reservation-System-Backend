@@ -12,6 +12,9 @@ router.post(
   validationRequset(bookedValidation.newBookedValidationSchema),
   BookedController.newBooked
 );
+
+router.put("/return", auth(user_role.admin), BookedController.returnBooked);
+
 router.get("/", auth(user_role.admin), BookedController.getAllOrders);
 router.get(
   "/my-bookings",

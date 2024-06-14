@@ -1,11 +1,8 @@
 import httpStatus from "http-status";
 import catchAsync from "../../utilits/catchAsync";
 import sendResponce from "../../utilits/sendResponce";
-import { CarController } from "../Cars/car.controller";
 import { BookedService } from "./booked.service";
-import { User } from "../User/user.model";
-import AppError from "../../Error/AppError";
-import { Types } from "mongoose";
+import { CarService } from "../Cars/car.service";
 
 const newBooked = catchAsync(async (req, res) => {
   const user = req.user;
@@ -48,8 +45,21 @@ const getMyAllOrders = catchAsync(async (req, res) => {
 //       data: result,
 //     });
 //   });
+
+const returnBooked = catchAsync(async (req, res) => {
+  const { bookingId: id } = req.body;
+  const result = await BookedService.returnBookedIntoDB(id, req.body);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Car booked successfully",
+    data: result,
+  });
+});
+
 export const BookedController = {
   newBooked,
   getAllOrders,
   getMyAllOrders,
+  returnBooked,
 };

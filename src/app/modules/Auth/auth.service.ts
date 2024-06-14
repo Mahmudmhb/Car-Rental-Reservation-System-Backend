@@ -28,19 +28,6 @@ const loginUser = async (payload: TUserLogin) => {
   if (!user) {
     throw new AppError(httpStatus.NOT_EXTENDED, "This User not found");
   }
-
-  // const isPasswordExsits = async (
-  //   newPassword: string,
-  //   hashPassword: string
-  // ) => {
-  //   const isPasswordMatched =
-  //   return isPasswordMatched;
-  // };
-  // const passwordMatched = await isPasswordExsits(
-  //   payload.password,
-  //   isUserExists.password
-  // );
-  // console.log(isUserExists);
   if (!(await User.isPasswordMatched(payload.password, user.password))) {
     throw new AppError(httpStatus.FORBIDDEN, "wrong password !");
   }
@@ -50,11 +37,12 @@ const loginUser = async (payload: TUserLogin) => {
     role: user.role,
   };
 
-  const token = accesstoken(
+  const accessToken = accesstoken(
     jwtPayload,
     config.jwt_access_token as string,
     "7d"
   );
+  const token = `Bearer ${accessToken}`;
 
   const accessRefreashToken = accesstoken(
     jwtPayload,
