@@ -11,10 +11,16 @@ const createCarIntoDB = async (payload: TCar) => {
 };
 const getAllCarFromDB = async () => {
   const result = await Car.find();
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+  }
   return result;
 };
 const getSingleCarFromDB = async (id: string) => {
   const result = await Car.findById(id);
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+  }
   return result;
 };
 
@@ -23,6 +29,9 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
     new: true,
     runValidators: true,
   });
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+  }
   return result;
 };
 

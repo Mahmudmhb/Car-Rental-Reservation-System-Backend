@@ -5,16 +5,7 @@ const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
   return result;
 };
-const getAllUserFromDB = async () => {
-  const result = await User.find();
-  return result;
-};
-const getSingleUserFromDB = async (id: string) => {
-  const result = await User.findById(id);
-  return result;
-};
+
 export const UserService = {
   createUserIntoDB,
-  getAllUserFromDB,
-  getSingleUserFromDB,
 };

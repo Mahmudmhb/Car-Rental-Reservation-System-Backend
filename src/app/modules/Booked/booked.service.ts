@@ -42,6 +42,10 @@ const newBookedIntoDB = async (user: JwtPayload, payload: TBooked) => {
 };
 const getAllBookedFromDB = async () => {
   const result = await Booked.find().populate("carId").populate("user");
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+  }
+
   return result;
 };
 const getMYAllBookedFromDB = async (email: string) => {
@@ -52,11 +56,16 @@ const getMYAllBookedFromDB = async (email: string) => {
   const result = await Booked.find({ user: user })
     .populate("carId")
     .populate("user");
-  // console.log(result);
+  // console.log(result);if (!result) {
+  throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+
   return result;
 };
 const getSingleBookedFromDB = async (id: string) => {
   const result = await Booked.findById(id);
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
+  }
   return result;
 };
 
