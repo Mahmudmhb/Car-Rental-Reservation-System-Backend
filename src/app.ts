@@ -1,9 +1,9 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import router from "./route";
-import gobalErrorHandler from "./middleware/gobalErrorHandler";
-import NotFound from "./middleware/notFound";
+import router from "./app/route";
+import gobalErrorHandler from "./app/middleware/gobalErrorHandler";
+import NotFound from "./app/middleware/notFound";
 
 const app: Application = express();
 const port = 3000;

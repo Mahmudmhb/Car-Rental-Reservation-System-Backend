@@ -12,7 +12,7 @@ const auth = (...requiredRoles: Tuser_role[]) => {
     if (!token) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        "YYou have no access to this route"
+        "You have no access to this route"
       );
     }
 

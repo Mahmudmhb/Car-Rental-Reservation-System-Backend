@@ -35,16 +35,6 @@ const getMyAllOrders = catchAsync(async (req, res) => {
     data: result,
   });
 });
-//   const getSingleCar = catchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const result = await CarService.getSingleCarFromDB(id);
-//     sendResponce(res, {
-//       statusCode: httpStatus.OK,
-//       success: true,
-//       message: "car retrived is successfully",
-//       data: result,
-//     });
-//   });
 
 const returnBooked = catchAsync(async (req, res) => {
   const { bookingId: id } = req.body;

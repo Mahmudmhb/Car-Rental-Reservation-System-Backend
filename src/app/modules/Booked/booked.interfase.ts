@@ -2,8 +2,8 @@ import mongoose, { Types } from "mongoose";
 
 export type TBooked = {
   date: string;
-  user?: mongoose.Schema.Types.ObjectId;
-  carId: mongoose.Schema.Types.ObjectId;
+  user?: Types.ObjectId;
+  carId: Types.ObjectId;
   startTime: string;
   endTime?: string;
   totalCost?: number;

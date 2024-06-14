@@ -1,4 +1,4 @@
-# Car Rental Reservation System Backend
+# Car Rental Reservation System Backend live https://assignment-3-ten-eta.vercel.app/
 
 ## Introduction
 
@@ -42,7 +42,7 @@ Welcome to the Car Rental Reservation System Backend. This project is designed t
 
    ```sh
    git clone https://github.com/Mahmudmhb/Car-Rental-Reservation-System-Backend
-   cd car-rental-system
+   cd Car-Rental-Reservation-System-Backend
    ```
 
 2. Install dependencies:
@@ -90,7 +90,8 @@ Ensure you have MongoDB running locally or provide a connection string to a Mong
 ### Bookings
 
 - **POST /api/bookings** - Create a new booking (User)
-- **GET /api/bookings** - Get all bookings (Admin)
+  **GET /api/bookings** - Get all bookings (Admin) - Query Parameters: - `carId`: ID of the car for which availability needs to be checked. - `date`: The specific date for which availability needs to be checked (format: YYYY-MM-DD). - Example Request:
+  `     /api/bookings?carId=608a6d8d03a1b40012abcdef&date=2024-06-15`
 - **GET /api/bookings/:id** - Get booking by ID (Admin/User)
 - **GET /api/bookings/my-bookings** - Get the logged-in user's bookings (User)
 - **PUT /api/bookings/:id/return** - Return a car and calculate the total cost (Admin)
