@@ -57,7 +57,7 @@ const getAllBookedFromDB = async () => {
   // const searchVariable = ["name"];
   const result = await Booked.find().populate("carId").populate("user");
   // console.log(result);
-  if (!result) {
+  if (!result.length) {
     throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
   }
 
