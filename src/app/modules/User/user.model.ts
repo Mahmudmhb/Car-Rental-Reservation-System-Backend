@@ -14,7 +14,7 @@ const UserSchema = new Schema<TUser, UserModel>(
       required: true,
       select: 0,
     },
-    phone: { type: Number, required: true },
+    phone: { type: String, required: true },
     address: { type: String, required: true },
   },
   { timestamps: true }

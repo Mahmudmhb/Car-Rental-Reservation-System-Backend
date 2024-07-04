@@ -13,7 +13,7 @@ const handleZodError = (err: ZodError): TGeneticErrorResponse => {
   const statusCode = 400;
   return {
     statusCode,
-    message: "validation error",
+    message: " Zod validation error",
     errorSources,
   };
 };

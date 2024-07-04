@@ -8,7 +8,7 @@ export interface TUser {
   email: string;
   role: Tuser_role;
   password: string;
-  phone: number;
+  phone: string;
   address: string;
 }
 

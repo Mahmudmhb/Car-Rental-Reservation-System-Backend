@@ -22,7 +22,7 @@ const createUserValidationSchema = z.object({
       invalid_type_error: "Password must be a string",
     }),
     phone: z
-      .number({
+      .string({
         required_error: "Number is required",
         // invalid_type_error: "Name must be a string",
       })

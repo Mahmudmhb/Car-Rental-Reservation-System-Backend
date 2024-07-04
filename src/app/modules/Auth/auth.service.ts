@@ -42,7 +42,7 @@ const loginUser = async (payload: TUserLogin) => {
     config.jwt_access_token as string,
     "7d"
   );
-  const token = `Bearer ${accessToken}`;
+  const token = `${accessToken}`;
 
   const accessRefreashToken = accesstoken(
     jwtPayload,

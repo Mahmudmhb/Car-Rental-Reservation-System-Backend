@@ -8,7 +8,9 @@ import { Tuser_role } from "../modules/User/user.interfase";
 
 const auth = (...requiredRoles: Tuser_role[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const authHeader = req.headers.authorization;
+    // console.log(token);
+    const token = authHeader?.split(" ")[1];
     if (!token) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,

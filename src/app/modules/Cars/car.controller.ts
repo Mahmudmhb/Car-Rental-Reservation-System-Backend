@@ -6,7 +6,7 @@ import sendResponce from "../../utilits/sendResponce";
 const createCar = catchAsync(async (req, res) => {
   const result = await CarService.createCarIntoDB(req.body);
   sendResponce(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 201,
     success: true,
     message: "Car created successfully",
     data: result,
