@@ -12,11 +12,21 @@ router.post(
   validationRequset(bookedValidation.newBookedValidationSchema),
   BookedController.newBooked
 );
-
 router.get("/", auth(user_role.admin), BookedController.getAllOrders);
+
 router.get(
   "/my-bookings",
   auth(user_role.user),
   BookedController.getMyAllOrders
+);
+router.patch(
+  "/:bookedId",
+  auth(user_role.admin),
+  BookedController.updateBooked
+);
+router.delete(
+  "/:bookedId",
+
+  BookedController.deleteBooked
 );
 export const BookedRoute = router;

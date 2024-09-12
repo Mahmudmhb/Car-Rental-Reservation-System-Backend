@@ -8,8 +8,10 @@ export interface TUser {
   email: string;
   role: Tuser_role;
   password: string;
+  confirmPassword: string;
   phone: string;
-  address: string;
+  address?: string;
+  termsAccepted: boolean;
 }
 
 export interface TUserDocument extends TUser, Document {}

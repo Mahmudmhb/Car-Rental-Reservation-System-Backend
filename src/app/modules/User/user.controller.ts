@@ -12,6 +12,39 @@ const createUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getAllUser = catchAsync(async (req, res) => {
+  const result = await UserService.getAllUserFromDB();
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All user are retived successfully",
+    data: result,
+  });
+});
+const getSingleUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const result = await UserService.getSingleUserFromDB(userId);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All user are retived successfully",
+    data: result,
+  });
+});
+const updateSingleUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const result = await UserService.updateSingleUserIntoDB(userId, req.body);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: " user role updated successfully",
+    data: result,
+  });
+});
+
 export const UserController = {
   createUser,
+  getAllUser,
+  getSingleUser,
+  updateSingleUser,
 };

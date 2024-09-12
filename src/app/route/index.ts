@@ -7,7 +7,7 @@ import { AuthRoute } from "../modules/Auth/auth.route";
 const router = Router();
 const modulesRoute = [
   {
-    path: "/create-user",
+    path: "/user",
     route: userRoute,
   },
   {

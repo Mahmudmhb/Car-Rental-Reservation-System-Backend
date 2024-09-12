@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const timeSchema = z.string().refine(
   (time) => {
-    const regex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/;
     return regex.test(time);
   },
   { message: '"invalid time formet expected HH.MM in 24 hour format" !' }

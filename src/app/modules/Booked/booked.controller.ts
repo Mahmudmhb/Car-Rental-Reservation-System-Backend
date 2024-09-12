@@ -25,6 +25,7 @@ const getAllOrders = catchAsync(async (req, res) => {
   });
 });
 const getMyAllOrders = catchAsync(async (req, res) => {
+  console.log(req.user);
   // console.log("test", );
   const { email } = req.user;
   const result = await BookedService.getMYAllBookedFromDB(email);
@@ -38,6 +39,7 @@ const getMyAllOrders = catchAsync(async (req, res) => {
 
 const returnBooked = catchAsync(async (req, res) => {
   const { bookingId: id } = req.body;
+  console.log({ id });
   const result = await BookedService.returnBookedIntoDB(id, req.body);
   sendResponce(res, {
     statusCode: httpStatus.OK,
@@ -46,10 +48,31 @@ const returnBooked = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
+const deleteBooked = catchAsync(async (req, res) => {
+  const { bookedId } = req.params;
+  const result = await BookedService.deleteBookedFromDb(bookedId);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My Booking deleted successfully",
+    data: result,
+  });
+});
+const updateBooked = catchAsync(async (req, res) => {
+  const { bookedId } = req.params;
+  const result = await BookedService.UpdatedBookedIntoDb(bookedId);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: " Book is approved successfully",
+    data: result,
+  });
+});
 export const BookedController = {
   newBooked,
   getAllOrders,
   getMyAllOrders,
   returnBooked,
+  deleteBooked,
+  updateBooked,
 };

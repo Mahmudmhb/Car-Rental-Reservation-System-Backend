@@ -30,8 +30,20 @@ const userLogin = catchAsync(async (req, res) => {
     data: { user, token },
   });
 });
+const updateUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const result = await AuthService.udapteUserIntoDb(req.body, userId);
+
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User updated successfully",
+    data: result,
+  });
+});
 
 export const AuthControllers = {
   registerUser,
   userLogin,
+  updateUser,
 };

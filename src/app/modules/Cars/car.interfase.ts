@@ -7,4 +7,7 @@ export type TCar = {
   status?: "available" | "unavailable";
   pricePerHour: number;
   isDeleted?: boolean;
+  AdditionalFeatures?: string[];
+  carType?: ["SUV" | "Sedan" | "Hatchback" | "Convertible"];
+  image?: string;
 };

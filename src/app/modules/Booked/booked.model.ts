@@ -18,9 +18,14 @@ const bookedSchema = new Schema<TBooked>(
       enum: ["unconfirmed", "confirmed"],
       default: "unconfirmed",
     },
+    isDeleted: {
+      type: Boolean,
+      default: "false",
+    },
   },
   {
     timestamps: true,
   }
 );
+
 export const Booked = model<TBooked>("Booked", bookedSchema);

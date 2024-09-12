@@ -95,45 +95,45 @@ const returnBookedIntoDB = async (
   id: string,
   payload: Record<string, unknown>
 ) => {
-  // console.log("get id", id);
   const session = await mongoose.startSession();
-
   try {
     session.startTransaction();
-    const { bookingId } = payload;
-    const findBook = await Booked.findOne({ _id: bookingId });
-    if (!findBook) {
-      throw new AppError(httpStatus.NOT_FOUND, "Bookigs is not Found");
-    }
-    const { carId } = findBook;
 
+    const { bookingId, endTime } = payload as {
+      bookingId: string;
+      endTime: string;
+    };
+
+    const findBook = await Booked.findOne({ _id: bookingId }).session(session);
+    if (!findBook) {
+      throw new AppError(httpStatus.NOT_FOUND, "Booking not found");
+    }
+    const { carId, startTime, date } = findBook;
+
+    // Convert date and startTime to a full DateTime string
+    const startDateTime = new Date(`${date}T${startTime}`);
+    const endDateTime = new Date(endTime);
     const findCar = await Car.findOneAndUpdate(
       { _id: carId },
       { status: "available" },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true, session }
     );
     if (!findCar) {
-      throw new AppError(httpStatus.NOT_FOUND, "booked not foundd");
+      throw new AppError(httpStatus.NOT_FOUND, "Car not found");
     }
-    // console.log(findCar.pricePerHour);
     const { pricePerHour } = findCar;
 
-    const FilterBooked = await Booked.findByIdAndUpdate(id, payload, session);
-    // console.log("find the", result);
-    if (!FilterBooked) {
-      throw new AppError(httpStatus.NOT_FOUND, "booked not foundd");
-    }
-    const { startTime, endTime } = FilterBooked;
-
     const filterTotalCost = calculationTotalDurationTime(
-      startTime,
-      endTime as string,
+      startDateTime.toISOString(),
+      endDateTime.toISOString(),
       pricePerHour
     );
     payload.totalCost = filterTotalCost;
+
     const result = await Booked.findByIdAndUpdate(id, payload, {
       new: true,
       runValidators: true,
+      session,
     })
       .populate("user")
       .populate("carId");
@@ -148,10 +148,28 @@ const returnBookedIntoDB = async (
   }
 };
 
+export default returnBookedIntoDB;
+
+const deleteBookedFromDb = async (id: string) => {
+  const result = await Booked.deleteOne({ _id: id });
+  return result;
+};
+const UpdatedBookedIntoDb = async (id: string) => {
+  const result = await Booked.findByIdAndUpdate(
+    id,
+    {
+      isBooked: "confirmed",
+    },
+    { new: true, runValidators: true }
+  );
+  return result;
+};
 export const BookedService = {
   getAllBookedFromDB,
   newBookedIntoDB,
   getSingleBookedFromDB,
   getMYAllBookedFromDB,
   returnBookedIntoDB,
+  deleteBookedFromDb,
+  UpdatedBookedIntoDb,
 };

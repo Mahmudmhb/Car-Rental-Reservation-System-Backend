@@ -21,12 +21,8 @@ router.put(
   validationRequset(bookedValidation.updateBookedValidationSchema),
   BookedController.returnBooked
 );
-router.put(
-  "/:id",
-  auth(user_role.admin),
-  validationRequset(CarValidation.updateCarValidationSchema),
-  CarController.updateCar
-);
-router.delete("/:id", auth(user_role.admin), CarController.deleteCar);
+router.patch("/:id", auth(user_role.admin), CarController.updateCar);
+router.delete("/:carId", auth(user_role.admin), CarController.deleteCar);
+
 router.get("/", CarController.getAllCar);
 export const CarRoute = router;

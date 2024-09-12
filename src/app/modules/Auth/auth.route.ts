@@ -10,4 +10,9 @@ router.post(
   AuthControllers.registerUser
 );
 router.post("/signin", AuthControllers.userLogin);
+router.patch(
+  "/:userId",
+  validationRequset(UserValidation.updateUserValidationSchema),
+  AuthControllers.updateUser
+);
 export const AuthRoute = router;
