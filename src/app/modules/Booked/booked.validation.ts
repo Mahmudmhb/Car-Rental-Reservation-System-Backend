@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 const timeSchema = z.string().refine(
   (time) => {
     const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/;
@@ -7,15 +6,24 @@ const timeSchema = z.string().refine(
   },
   { message: '"invalid time formet expected HH.MM in 24 hour format" !' }
 );
+export const BookingFormSchema = z.object({
+  nidOrPassport: z.string().min(1, "NID or Passport number is required"),
+  drivingLicense: z.string().min(1, "Driving license is required"),
+  cardNumber: z.string().min(1, "Card number is required"),
+  expirationDate: z.string().min(1, "Expiration date is required"),
+  cvv: z.string().min(1, "CVV is required"),
+  startTime: timeSchema,
+});
+
 const newBookedValidationSchema = z.object({
   body: z.object({
-    date: z.string(),
     user: z.string().optional(),
     carId: z.string(),
-    startTime: timeSchema,
+
     endTime: timeSchema.optional(),
     totalCost: z.number().optional(),
     isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
+    payment: BookingFormSchema,
   }),
 });
 const updateBookedValidationSchema = z.object({
@@ -27,6 +35,7 @@ const updateBookedValidationSchema = z.object({
     endTime: timeSchema,
     totalCost: z.number().optional(),
     isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
+    payment: BookingFormSchema,
   }),
 });
 export const bookedValidation = {

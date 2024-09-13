@@ -18,7 +18,7 @@ router.get("/:id", CarController.getSingleCar);
 router.put(
   "/return",
   auth(user_role.admin),
-  validationRequset(bookedValidation.updateBookedValidationSchema),
+  // validationRequset(bookedValidation.updateBookedValidationSchema),
   BookedController.returnBooked
 );
 router.patch("/:id", auth(user_role.admin), CarController.updateCar);

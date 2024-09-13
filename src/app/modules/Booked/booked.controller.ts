@@ -39,7 +39,6 @@ const getMyAllOrders = catchAsync(async (req, res) => {
 
 const returnBooked = catchAsync(async (req, res) => {
   const { bookingId: id } = req.body;
-  console.log({ id });
   const result = await BookedService.returnBookedIntoDB(id, req.body);
   sendResponce(res, {
     statusCode: httpStatus.OK,
@@ -68,11 +67,22 @@ const updateBooked = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const paymentCustomer = catchAsync(async (req, res) => {
+  const orderData = req.body;
+  const newOrder = await BookedService.orderPayment(orderData);
+  sendResponce(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: " Book is approved successfully",
+    data: newOrder,
+  });
+});
 export const BookedController = {
   newBooked,
   getAllOrders,
   getMyAllOrders,
   returnBooked,
   deleteBooked,
+  paymentCustomer,
   updateBooked,
 };

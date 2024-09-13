@@ -29,4 +29,5 @@ router.delete(
 
   BookedController.deleteBooked
 );
+router.post("/payment", BookedController.paymentCustomer);
 export const BookedRoute = router;

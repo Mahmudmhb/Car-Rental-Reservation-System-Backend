@@ -10,7 +10,7 @@ router.get("/", auth(user_role.admin), UserController.getAllUser);
 router.get("/:userId", auth(user_role.admin), UserController.getSingleUser);
 router.patch(
   "/:userId",
-  auth(user_role.admin),
+
   UserController.updateSingleUser
 );
 // router.post(

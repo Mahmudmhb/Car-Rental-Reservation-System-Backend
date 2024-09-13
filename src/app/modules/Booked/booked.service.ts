@@ -7,6 +7,7 @@ import { Car } from "../Cars/car.model";
 import { calculationTotalDurationTime } from "./booked.utils";
 import mongoose from "mongoose";
 import { TUser } from "../User/user.interfase";
+import { initialPayment } from "./Payment/payment.utlis";
 interface TBookeded extends Document {
   carId: mongoose.Types.ObjectId;
   user?: mongoose.Types.ObjectId;
@@ -105,13 +106,16 @@ const returnBookedIntoDB = async (
     };
 
     const findBook = await Booked.findOne({ _id: bookingId }).session(session);
+    console.log("find book", findBook?.payment.startTime);
     if (!findBook) {
       throw new AppError(httpStatus.NOT_FOUND, "Booking not found");
     }
-    const { carId, startTime, date } = findBook;
+    const startTime = findBook.payment.startTime;
+    const { carId, date } = findBook;
+    console.log("car id", startTime);
 
     // Convert date and startTime to a full DateTime string
-    const startDateTime = new Date(`${date}T${startTime}`);
+    const startDateTime = new Date(startTime);
     const endDateTime = new Date(endTime);
     const findCar = await Car.findOneAndUpdate(
       { _id: carId },
@@ -164,6 +168,35 @@ const UpdatedBookedIntoDb = async (id: string) => {
   );
   return result;
 };
+
+const orderPayment = async (payload: any) => {
+  const getPayment = payload;
+  const totalCost = getPayment.totalCost;
+
+  const transactionId = `TXN-${Date.now()}`;
+
+  const order = new Booked({
+    user: getPayment.user,
+    products: getPayment?.carId?.name,
+    totalCost,
+    status: "Pending",
+    paymentStatus: "Pending",
+    transactionId,
+  });
+  await order.save();
+  const paymentData = {
+    transactionId,
+    totalCost,
+    customerName: getPayment.user.name,
+    custormarEmail: getPayment.user.email,
+    custormarPhone: getPayment.user.phone,
+  };
+  console.log(paymentData);
+  const initialState = await initialPayment(paymentData);
+  console.log(initialState);
+  return initialState;
+};
+
 export const BookedService = {
   getAllBookedFromDB,
   newBookedIntoDB,
@@ -172,4 +205,5 @@ export const BookedService = {
   returnBookedIntoDB,
   deleteBookedFromDb,
   UpdatedBookedIntoDb,
+  orderPayment,
 };
