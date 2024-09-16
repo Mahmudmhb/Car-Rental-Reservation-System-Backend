@@ -18,15 +18,15 @@ const bookedSchema = new Schema<TBooked>(
       default: null,
     },
     carId: { type: Schema.Types.ObjectId, ref: "Car" },
-    products: { type: String }, // Name of the car (or products)
+    products: { type: String },
     totalCost: { type: Number, default: 0 },
-    status: { type: String, default: "Pending" }, // Order status
+    status: { type: String, default: "Pending" },
     paymentStatus: {
       type: String,
       enum: ["Pending", "Paid"],
       default: "Pending",
-    }, // Payment status
-    transactionId: { type: String, required: true }, // Unique transaction ID
+    },
+    transactionId: { type: String },
     endTime: { type: String, default: null },
     isBooked: {
       type: String,

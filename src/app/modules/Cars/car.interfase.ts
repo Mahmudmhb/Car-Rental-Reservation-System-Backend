@@ -10,4 +10,6 @@ export type TCar = {
   AdditionalFeatures?: string[];
   carType?: ["SUV" | "Sedan" | "Hatchback" | "Convertible"];
   image?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

@@ -13,11 +13,11 @@ export type TBooked = {
   date?: string;
   user?: Types.ObjectId;
   carId: Types.ObjectId;
-  products?: string; // Added for car name or product details
+  products?: string;
   totalCost?: number;
-  status?: "Pending" | "Confirmed" | "Cancelled"; // Added for order status
-  paymentStatus?: "Pending" | "Paid"; // Added for payment status
-  transactionId: string; // Added for transaction ID
+  status?: "Pending" | "Confirmed" | "Cancelled";
+  paymentStatus?: "Pending" | "Paid";
+  transactionId?: string;
   endTime?: string;
   isBooked?: "unconfirmed" | "confirmed";
   isDeleted?: boolean;

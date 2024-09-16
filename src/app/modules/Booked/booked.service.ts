@@ -18,13 +18,11 @@ const newBookedIntoDB = async (
   payload: TBooked
 ) => {
   const filterLoginUser = await User.findOne({ email: user.email });
-  // console.log(filterLoginUser);
   if (!filterLoginUser) {
     throw new AppError(httpStatus.NOT_FOUND, "user not Found");
   }
   const newUser = filterLoginUser._id;
   payload.user = newUser as mongoose.Types.ObjectId;
-  // console.log(payload);
 
   const filterCar = await Car.findOne({ _id: payload.carId });
   if (!filterCar) {
@@ -172,18 +170,21 @@ const UpdatedBookedIntoDb = async (id: string) => {
 const orderPayment = async (payload: any) => {
   const getPayment = payload;
   const totalCost = getPayment.totalCost;
+  console.log(getPayment);
 
   const transactionId = `TXN-${Date.now()}`;
 
-  const order = new Booked({
-    user: getPayment.user,
-    products: getPayment?.carId?.name,
-    totalCost,
-    status: "Pending",
-    paymentStatus: "Pending",
-    transactionId,
-  });
-  await order.save();
+  const order = await Booked.updateOne(
+    { _id: getPayment._id },
+    {
+      user: getPayment.user,
+      products: getPayment?.carId?.name,
+      totalCost,
+      status: "Pending",
+      paymentStatus: "Pending",
+      transactionId,
+    }
+  );
   const paymentData = {
     transactionId,
     totalCost,
@@ -191,9 +192,8 @@ const orderPayment = async (payload: any) => {
     custormarEmail: getPayment.user.email,
     custormarPhone: getPayment.user.phone,
   };
-  console.log(paymentData);
   const initialState = await initialPayment(paymentData);
-  console.log(initialState);
+  // console.log(initialState);
   return initialState;
 };
 
