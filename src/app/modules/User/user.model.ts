@@ -19,10 +19,12 @@ const UserSchema = new Schema<TUser, UserModel>(
       required: true,
       select: 0,
     },
+    status: { type: String, enum: ["Block", "Active"], default: "Active" },
     phone: { type: String },
     address: { type: String },
     termsAccepted: { type: Boolean },
   },
+
   { timestamps: true }
 );
 

@@ -130,7 +130,7 @@ const returnBookedIntoDB = async (
       endDateTime.toISOString(),
       pricePerHour
     );
-    payload.totalCost = filterTotalCost;
+    payload.totalCost = filterTotalCost?.toFixed(2);
 
     const result = await Booked.findByIdAndUpdate(id, payload, {
       new: true,
@@ -170,7 +170,6 @@ const UpdatedBookedIntoDb = async (id: string) => {
 const orderPayment = async (payload: any) => {
   const getPayment = payload;
   const totalCost = getPayment.totalCost;
-  console.log(getPayment);
 
   const transactionId = `TXN-${Date.now()}`;
 
@@ -188,9 +187,9 @@ const orderPayment = async (payload: any) => {
   const paymentData = {
     transactionId,
     totalCost,
-    customerName: getPayment.user.name,
-    custormarEmail: getPayment.user.email,
-    custormarPhone: getPayment.user.phone,
+    customerName: getPayment?.user?.name,
+    custormarEmail: getPayment?.user?.email,
+    custormarPhone: getPayment?.user?.phone,
   };
   const initialState = await initialPayment(paymentData);
   // console.log(initialState);

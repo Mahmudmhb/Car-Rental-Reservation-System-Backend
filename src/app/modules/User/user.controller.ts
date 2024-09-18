@@ -33,6 +33,7 @@ const getSingleUser = catchAsync(async (req, res) => {
 });
 const updateSingleUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
+  console.log(userId);
   const result = await UserService.updateSingleUserIntoDB(userId, req.body);
   sendResponce(res, {
     statusCode: httpStatus.OK,
